@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Big+Shoulders+Text:100,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <style>
+      /* CSS Styles */
+      body {
+        margin: 0;
+        font-family: 'Big Shoulders Text', cursive;
+        position: relative; /* To position the countdown */
+        overflow: hidden; /* Hide overflow for smooth effect */
+      }
+
+      .section-intro {
+        height: 100vh; /* Set to full viewport height */
+        background-image: url(https://i.ibb.co/2PMWwxW/rob-laveck-Kw8-GCPMRlj4-unsplash-1.jpg);
+        background-size: cover; /* Ensure the background image covers the section */
+        background-position: center; /* Center the background image */
+        background-repeat: no-repeat; /* Prevent repeating the background image */
+        display: flex;
+        flex-direction: column;
+      
+      
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .section-intro h1 {
+        text-align: center;
+        color: transparent;
+        font-size: 4em;
+        margin-top: 10px;
+        font-weight: 700;
+        color: #ffcc00;
+        -webkit-background-clip: text;
+        background-clip: text;
+        border-radius: 15px; /* Rounded corners */
+        padding: 10px; /* Add padding for better appearance */
+      }
+
+      .countdown {
+        position: absolute; /* Position countdown */
+        top: 100px; /* Distance from the top */
+        right: 20px; /* Distance from the right */
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #ffffff;
+        padding: 15px;
+        border-radius: 15px; /* Rounded corners */
+        font-size: 1.5em;
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 
+                     0 0 20px rgba(255, 69, 189, 0.8), 
+                     0 0 30px rgba(0, 0, 255, 0.8); /* Neon effect */
+        animation: fadeIn 1s ease-in-out; /* Fade-in animation */
+        display: flex;
+  flex-direction: column; /* Arrange items vertically */
+       margin: 5px 0; /* Space between units */
+        align-items: center; /* Center items */
+      }
+
+      .time-unit {
+        display: flex;
+        flex-direction: column; /* Stack day, hour, minute, second */
+        align-items: center; /* Center the text */
+        margin: 5px 0; /* Space between units */
+      }
+
+      .time-value {
+        font-size: 2em; /* Bigger font size for values */
+        font-weight: bold; /* Make value bold */
+        color: #ffcc00; /* Neon yellow color for the value */
+        text-shadow: 0 0 5px rgba(255, 204, 0, 0.8);
+      }
+
+      .time-label {
+        font-size: 0.8em; /* Smaller font size for labels */
+        color: #ffffff; /* White color for labels */
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+      }
+
+      /* Responsive styles */
+      @media (max-width: 600px) {
+        .countdown {
+          top: 5vh; /* Adjust top position for smaller screens */
+          right: 30px; /* Adjust right position for smaller screens */
+          font-size: 1.2em; /* Smaller font size for countdown */
+ 
+     
+      }
+
+
+        .time-value {
+          font-size: 1.5em; /* Smaller value size for countdown */
+        }
+
+        .time-label {
+          font-size: 0.6em; /* Smaller label size for countdown */
+        }
+      }
+    </style>
+
+    <title>Restaurant Website - Section Intro</title>
+  </head>
+  <body>
+    <section class="section-intro">
+      <header>
+        <h1>20' s Corner</h1>
+      </header>
+    </section>
+
+    <div class="countdown" id="countdown">
+      <div class="time-unit">
+        <div class="time-value" id="days">365</div>
+        <div class="time-label">DAYS</div>
+      </div>
+      <div class="time-unit">
+        <div class="time-value" id="hours">0</div>
+        <div class="time-label">Hrs</div>
+      </div>
+      <div class="time-unit">
+        <div class="time-value" id="minutes">0</div>
+        <div class="time-label">Min</div>
+      </div>
+      <div class="time-unit">
+        <div class="time-value" id="seconds">0</div>
+        <div class="time-label">Sec</div>
+      </div>
+    </div>
+
+    <script>
+      // Function to make the webpage go fullscreen
+      function openFullscreen() {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { // Firefox
+          elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { // IE/Edge
+          elem.msRequestFullscreen();
+        }
+      }
+
+      // Event listener for keypress
+      document.addEventListener('keypress', function(event) {
+        if (event.key === 'f' || event.key === 'F') {
+          openFullscreen();
+        }
+      });
+
+      // Countdown Timer Functionality
+      const targetDate = new Date("2025-10-01T00:00:00"); // Set your target date here
+
+      const countdownInterval = setInterval(() => {
+        const now = new Date();
+        const remainingTime = targetDate - now;
+
+        if (remainingTime < 0) {
+          clearInterval(countdownInterval);
+          document.getElementById("countdown").innerText = "Time's up!";
+          return;
+        }
+
+        const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+        // Update the countdown display
+        document.getElementById("days").innerText = days;
+        document.getElementById("hours").innerText = hours;
+        document.getElementById("minutes").innerText = minutes;
+        document.getElementById("seconds").innerText = seconds;
+      }, 1000); // Update every second
+
+      // Display the initial countdown value immediately
+      document.getElementById("days").innerText = "365";
+      document.getElementById("hours").innerText = "0";
+      document.getElementById("minutes").innerText = "0";
+      document.getElementById("seconds").innerText = "0";
+    </script>
+  </body>
+</html>
